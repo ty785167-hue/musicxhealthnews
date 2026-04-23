@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ja"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Music &amp; Health News&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f0f7f9; margin: 0; padding: 20px; color: #333; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.container { max-width: 600px; margin: 0 auto; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>header { text-align: center; padding: 20px 0; background: #fff; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 { margin: 0; color: #2c3e50; font-size: 1.5rem; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 span { color: #3498db; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.refresh-btn { margin-top: 10px; padding: 8px 16px; background: #3498db; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 0.9rem; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.refresh-btn:hover { background: #2980b9; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>#news-list { display: flex; flex-direction: column; gap: 15px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.news-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; text-decoration: none; color: inherit; display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.news-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.news-title { font-weight: bold; font-size: 1.1rem; line-height: 1.4; color: #2c3e50; margin-bottom: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.news-meta { font-size: 0.8rem; color: #7f8c8d; display: flex; justify-content: space-between; }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.loading { text-align: center; padding: 50px; font-size: 1.2rem; color: #7f8c8d; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.error { color: #e74c3c; text-align: center; padding: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;🎵 Music &amp; Health &lt;span&gt;News&lt;/span&gt;&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="margin: 5px 0 0; font-size: 0.9rem; color: #7f8c8d;"&gt;音楽と健康の最新トピック&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="refresh-btn" onclick="fetchNews()"&gt;最新に更新&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="news-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="loading"&gt;最新ニュースを読み込み中...&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function fetchNews() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const newsList = document.getElementById('news-list');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>newsList.innerHTML = '&lt;div class="loading"&gt;最新情報を取得中...&lt;/div&gt;';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 検索キーワード: 音楽 健康 研究</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const query = encodeURIComponent('音楽 健康 研究');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Google NewsのRSSをJSONに変換する公開プロキシサービスを使用</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const rssUrl = `https://news.google.com/rss/search?q=${query}&amp;hl=ja&amp;gl=JP&amp;ceid=JP:ja`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const response = await fetch(apiUrl);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const data = await response.json();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (data.status === 'ok') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>newsList.innerHTML = ''; // ローディング消去</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data.items.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const card = document.createElement('a');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>card.className = 'news-card';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>card.href = item.link;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>card.target = '_blank';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// 日付を読みやすく整形</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const pubDate = new Date(item.pubDate).toLocaleDateString('ja-JP');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>card.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="news-title"&gt;${item.title}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="news-meta"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;${item.author || 'ニュースソース'}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;${pubDate}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>newsList.appendChild(card);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>throw new Error();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>newsList.innerHTML = '&lt;div class="error"&gt;ニュースの取得に失敗しました。&lt;br&gt;しばらく時間を置いてから再度お試しください。&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 初回読み込み</p>
+<p class="p1"><span class="Apple-converted-space">    </span>fetchNews();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
